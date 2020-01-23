@@ -7,13 +7,16 @@
 #include <LeMonADE/updater/UpdaterAddLinearChains.h>
 #include <LeMonADE/updater/UpdaterSimpleSimulator.h>
 #include <LeMonADE/analyzer/AnalyzerWriteBfmFile.h>
+// #include <LeMonADE/analyzer/AnalyzerRadiusOfGyration.h>
+
+#include "../../analyzer/AnalyzerRadiusOfGyrationForType.h"
 
 #include <LeMonADE/utility/RandomNumberGenerators.h>
 #include <LeMonADE/utility/TaskManager.h>
 
 int main(int argc, char* argv[])
 {
-  int nChains(1),chainLength(64),type1(1),type2(3),nMCS(100),nRuns(10), nSolvent((0.5*32*32*32)/8-chainLength);
+  int nChains(1),chainLength(16),type1(1),type2(3),nMCS(100),nRuns(1000000), nSolvent((0.5*32*32*32)/8-chainLength);
   
   typedef LOKI_TYPELIST_4(
     FeatureMoleculesIO, 
@@ -36,14 +39,18 @@ int main(int argc, char* argv[])
   ingredients.setPeriodicZ(true);
 
   ingredients.modifyBondset().addBFMclassicBondset();
-  ingredients.setNNInteraction(1,3,0.8);
+  ingredients.setNNInteraction(1,3,0.2);
   ingredients.synchronize();
   
   TaskManager taskManager;
   taskManager.addUpdater(new UpdaterAddLinearChains<IngredientsType>(ingredients, nChains,chainLength,type1,type1),0); 
   taskManager.addUpdater(new UpdaterAddLinearChains<IngredientsType>(ingredients, nSolvent,1,type2,type2),0);
   taskManager.addUpdater(new UpdaterSimpleSimulator<IngredientsType,MoveLocalSc>(ingredients,nMCS));
-  taskManager.addAnalyzer(new AnalyzerWriteBfmFile<IngredientsType>("config_nn.bfm",ingredients,AnalyzerWriteBfmFile<IngredientsType>::APPEND));
+  taskManager.addAnalyzer(new AnalyzerWriteBfmFile<IngredientsType>("config_nn_16_02_short.bfm",ingredients,AnalyzerWriteBfmFile<IngredientsType>::APPEND),100);
+
+//   taskManager.addAnalyzer(new AnalyzerRadiusOfGyration<IngredientsType>(ingredients,"Rg2.dat"),100);
+  taskManager.addAnalyzer(new AnalyzerRadiusOfGyrationForType<IngredientsType>(ingredients,"Rg2_16_solvent_02_new.dat",type1),100);
+
   
   taskManager.initialize();
   taskManager.run(nRuns);

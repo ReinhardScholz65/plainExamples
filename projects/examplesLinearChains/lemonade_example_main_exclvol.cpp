@@ -6,13 +6,14 @@
 #include <LeMonADE/updater/UpdaterAddLinearChains.h>
 #include <LeMonADE/updater/UpdaterSimpleSimulator.h>
 #include <LeMonADE/analyzer/AnalyzerWriteBfmFile.h>
+#include <LeMonADE/analyzer/AnalyzerRadiusOfGyration.h>
 
 #include <LeMonADE/utility/RandomNumberGenerators.h>
 #include <LeMonADE/utility/TaskManager.h>
 
 int main(int argc, char* argv[])
 {
-  int nChains(1),chainLength(64),type1(1),nMCS(100),nRuns(10);
+  int nChains(1),chainLength(128),type1(1),nMCS(100),nRuns(1000000);
   
   typedef LOKI_TYPELIST_3(
     FeatureMoleculesIO, 
@@ -39,6 +40,7 @@ int main(int argc, char* argv[])
   taskManager.addUpdater(new UpdaterAddLinearChains<IngredientsType>(ingredients, nChains,chainLength,type1,type1),0); 
   taskManager.addUpdater(new UpdaterSimpleSimulator<IngredientsType,MoveLocalSc>(ingredients,nMCS));
   taskManager.addAnalyzer(new AnalyzerWriteBfmFile<IngredientsType>("config_ev.bfm",ingredients,AnalyzerWriteBfmFile<IngredientsType>::APPEND));
+  taskManager.addAnalyzer(new AnalyzerRadiusOfGyration<IngredientsType>(ingredients,"Rg2.dat"),100);
   
   taskManager.initialize();
   taskManager.run(nRuns);
