@@ -61,7 +61,7 @@ public:
    */
   
   /**
-   * additonal paramneters needed to administrate number of stars, number of branches, etc.:
+   * additonal parameters needed to administrate number of stars, number of branches, etc.:
    * 
    * @param NStar_ number of stars in ingredients
    * @param NMonoPerStar_ number of monomers in each star

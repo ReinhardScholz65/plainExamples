@@ -32,8 +32,8 @@ along with LeMonADE.  If not, see <http://www.gnu.org/licenses/>.
 #include <LeMonADE/updater/moves/MoveLocalBase.h>
 #include <LeMonADE/utility/RandomNumberGenerators.h>
 #include <LeMonADE/updater/AbstractUpdater.h>
-//#include <LeMonADE/updater/moves/MoveConnectSc.h>
-#include <LeMonADE/updater/moves/MoveConnectScAB.h>
+#include <LeMonADE/updater/moves/MoveConnectSc.h>
+//#include <LeMonADE/updater/moves/MoveConnectScAB.h>
 /**
  * @file
  *
@@ -77,12 +77,12 @@ public:
 
 
 //UpdaterSetReactivityStarEndsAB(IngredientsType& ing,uint32_t steps = 1,uint32_t NStar_, uint32_t NMonoPerStar_, 
-//                    uint32_t NBranchPerStar_, uint32_t NMonoPerBranch_, 
+//                    uint32_t NMonoPerBranch_, uint32_t NBranchPerStar_, 
 //                    int32_t type1_=1, int32_t type2_=2, bool IsSolvent=false,
 //                    uint32_t NReactedSites,uint32_t NReactiveSites )
 //  :ingredients(ing),nsteps(steps),
 //                    uint32_t NStar_, uint32_t NMonoPerStar_, 
-//                    uint32_t NBranchPerStar_, uint32_t NMonoPerBranch_, 
+//                    uint32_t NMonoPerBranch_, uint32_t NBranchPerStar_, 
 //                    int32_t type1_=1, int32_t type2_=2, bool IsSolvent=false,
 //                    uint32_t NReactedSites(0),uint32_t NReactiveSites(0){}
 
@@ -150,11 +150,11 @@ private:
   //! Number of monomers per star
   uint32_t NMonoPerStar;
 
-  //! Number of branches per star
-  uint32_t NBranchPerStar;
- 
    //! Number of monomers per branch
   uint32_t NMonoPerBranch;
+ 
+  //! Number of branches per star
+  uint32_t NBranchPerStar;
  
  //! Reactivity (especially for branch ends)
   bool reactivity;
